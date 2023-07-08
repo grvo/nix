@@ -1,7 +1,7 @@
 // copyright (c) grvo <notgrivo@gmail.com>
-// licenciado por meio da mit license
+// licenciado por meio da mit license.
 //
-// veja o arquivo LICENSE na raíz do repositório para ver licença completa
+// veja o arquivo LICENSE na raíz do repositório para ver licença completa.
 
 using System.IO;
 using System.Threading.Tasks;
@@ -35,7 +35,7 @@ namespace nix.Android
         public static async Task<AndroidImportTask?> Create(ContentResolver contentResolver, Uri uri)
         {
             // existem sobrecargas de maior desempenho deste método, mas este é o mais compatível com versões anteriores
-            // (as dates voltam para a API 1)
+            // (as dates voltam para a API 1).
 
             var cursor = contentResolver.Query(uri, null, null, null, null);
 
@@ -49,9 +49,9 @@ namespace nix.Android
             string filename = cursor.GetString(filenameColumn) ?? uri.Path ?? string.Empty;
 
             // SharpCompress requer fluxos de arquivo para serem pesquisáveis, que o fluxo aberto por
-            // OpenInputStream() parece não ser necessariamente
+            // OpenInputStream() parece não ser necessariamente.
             //
-            // copie para um fluxo de memória de acesso arbitrário para poder prosseguir com a importação
+            // copie para um fluxo de memória de acesso arbitrário para poder prosseguir com a importação.
             var copy = new MemoryStream();
 
             using (var stream = contentResolver.OpenInputStream(uri))
