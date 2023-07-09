@@ -1,0 +1,32 @@
+clone_depth: 1
+version: '{branch}-{build}'
+image: Visual Studio 2022
+cache:
+  - '%LOCALAPPDATA%\NuGet\v3-cache -> appveyor.yml'
+
+dotnet_csproj:
+  patch: true
+  file: 'osu.Game\osu.Game.csproj' # usar curinga quando puder excluir projetos xamarin
+  version: '0.0.{build}'
+
+before_build:
+  - cmd: dotnet --info # útil quando a versão é incompatível entre ci e o local
+  - cmd: dotnet workload install maui-android # alterar para `dotnet workload restore` quando não houver projetos antigos
+  - cmd: dotnet workload install maui-ios # alterar para `dotnet workload restore` quando não houver projetos antigos
+  - cmd: nuget restore -verbosity quiet # somente nuget.exe conhece projetos novos (.net core) e antigos (xamarin)
+
+build:
+  project: osu.sln
+  parallel: true
+  verbosity: minimal
+  publish_nuget: true
+
+after_build:
+  - ps: .\InspectCode.ps1
+
+test:
+  assemblies:
+    except:
+      - '**\*Android*'
+      - '**\*iOS*'
+      - 'build\**\*'
