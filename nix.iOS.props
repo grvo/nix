@@ -1,0 +1,24 @@
+<Project>
+    <PropertyGroup>
+        <CodesignKey>desenvolvedor de iphone</CodesignKey>
+        <NullabilityInfoContextSupport>true</NullabilityInfoContextSupport>
+
+        <!-- solução alternativa para um problema upstream do qual o realm sofre (https://github.com/dotnet/runtime/issues/69410) -->
+        <UseInterpreter>true</UseInterpreter>
+
+        <!-- mt7091 ocorre quando um bundle .framework é referenciado que consiste em uma biblioteca estática. -->
+        <NoWarn>$(NoWarn);MT7091</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Platform)' == 'iPhone'">
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Platform)' == 'iPhoneSimulator'">
+        <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ppy.osu.Framework.iOS" Version="2023.707.0" />
+    </ItemGroup>
+</Project>
